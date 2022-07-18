@@ -14,54 +14,6 @@ name_prompt_dict = {1: 'What is your name?', 2: 'Como te llamas?', 3: 'Comment v
 greetings_dict = {1: 'Hello', 2: 'Hola', 3: 'Bonjour'}
 
 
-def select_user_mode():
-    print("Please select a user mode:\n"
-          "1: Admin\n"
-          "2: User\n")
-    user_input = int(input())
-    if user_input == 1:
-        enter_admin()
-    elif user_input == 2:
-        print("User mode selected")
-    else:
-        print("That's not an option. Please try again. Select 1 for admin and 2 for user.\n")
-
-
-def enter_admin():
-    # Add support for additional languages.
-    #  Update greetings for existing languages.
-    print("Select from the following options:\n"
-          "1. Add new language\n"
-          "2: Update language\n")
-    user_input = int(input())
-    if user_input == 1:
-        admin_add_language()
-    elif user_input == 2:
-        admin_update_language()
-    else:
-        print("That's not an option. Switching to user mode.\n")
-
-def admin_add_language():
-    print("Please enter the language you are adding.\n")
-    new_lang = input()
-    new_key = len(lang_dict) + 1
-    lang_dict[new_key] = new_lang
-    print(f'Please enter "What is your name?" in {new_lang}.')
-    new_name_prompt = input()
-    name_prompt_dict[new_key] = new_name_prompt
-    print(f'Please enter "Hello" in {new_lang}.')
-    new_greeting = input()
-    greetings_dict[new_key] = new_greeting
-    print(f'Thank you. {new_lang} has been entered. Now entering user mode\n')
-
-def admin_update_language():
-    print("Which language are you updating?")
-    print(lang_dict)
-    lang_selection = int(input())
-    print("Please enter a new greeting.\n")
-    new_greeting = input()
-    greetings_dict[lang_selection] = new_greeting
-    print("The greeting has been updated.")
 
 def print_language_options(lang_options: Dict[int, str]) -> None:
     """
@@ -74,7 +26,7 @@ def print_language_options(lang_options: Dict[int, str]) -> None:
     """
     print("Please choose a language: ")
     for key, language in lang_options.items():
-       print(f'{key}:', language)
+       print(f'{key}: {language}')
 
    # pass  # remove pass statement and implement me
 
@@ -119,13 +71,7 @@ def get_name_input(name_prompt_options: Dict[int, str], lang_choice: int) -> str
     :param lang_choice: The language the user has chosen
     :return:
     """
-    if lang_choice == 1:
-        print(name_prompt_options[1])
-    elif lang_choice == 2:
-        print(name_prompt_options[2])
-    else:
-        print(name_prompt_options[3])
-
+    return name_prompt_options.get(lang_choice)
 
 def name_input(name_prompt: str) -> str:
     """
@@ -134,7 +80,7 @@ def name_input(name_prompt: str) -> str:
     :param name_prompt: A string in the user's chosen language that asks them for their name
     :return: The user's response when asked for their name
     """
-    name_prompt = str(input())
+    name_prompt = input("What is your name?\n")
     return name_prompt
     #pass  # remove pass statement and implement me
 
@@ -152,7 +98,53 @@ def greet(name: str, greetings_options: Dict[int, str], lang_choice: int) -> Non
     greeting = str(greetings_options[lang_choice])
     print(greeting + " " + name)
 
+def select_user_mode():
+    print("Please select a user mode:\n"
+          "1: Admin\n"
+          "2: User\n")
+    user_input = int(input())
+    if user_input == 1:
+        enter_admin()
+    elif user_input == 2:
+        print("User mode selected")
+    else:
+        print("That's not an option. Please try again. Select 1 for admin and 2 for user.\n")
 
+def enter_admin():
+    # Add support for additional languages.
+    #  Update greetings for existing languages.
+    print("Select from the following options:\n"
+          "1. Add new language\n"
+          "2: Update language\n")
+    user_input = int(input())
+    if user_input == 1:
+        admin_add_language()
+    elif user_input == 2:
+        admin_update_language()
+    else:
+        print("That's not an option. Switching to user mode.\n")
+
+def admin_add_language():
+    print("Please enter the language you are adding.\n")
+    new_lang = input()
+    new_key = len(lang_dict) + 1
+    lang_dict[new_key] = new_lang
+    print(f'Please enter "What is your name?" in {new_lang}.')
+    new_name_prompt = input()
+    name_prompt_dict[new_key] = new_name_prompt
+    print(f'Please enter "Hello" in {new_lang}.')
+    new_greeting = input()
+    greetings_dict[new_key] = new_greeting
+    print(f'Thank you. {new_lang} has been entered. Now entering user mode\n')
+
+def admin_update_language():
+    print("Which language are you updating?")
+    print(lang_dict)
+    lang_selection = int(input())
+    print("Please enter a new greeting.\n")
+    new_greeting = input()
+    greetings_dict[lang_selection] = new_greeting
+    print("The greeting has been updated.")
 
     #pass  # remove pass statement and implement me
 
